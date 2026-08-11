@@ -1,21 +1,33 @@
+'use client';
+import ToggleOffIcon from '@mui/icons-material/ToggleOff';
+import ToggleOnIcon from '@mui/icons-material/ToggleOn';
+import {useState} from 'react'
 
 
 export default function SideBar() {
+
+  let [switchDefault, setSwitchDefault] = useState(false)
+
   return (
     <div className="flex h-full flex-col space-y-4">
-      <button className="rounded-lg bg-blue-600 px-4 py-2 text-left text-sm font-medium text-white">
+      <button className="rounded-lg bg-primary px-4 py-4 text-center   text-sm font-medium text-white ">
         + New Chat
       </button>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-3">
+      <div className="rounded-lg  p-1 flex justify-between items-center">
         <label htmlFor="temporaryChat" className="text-sm font-medium text-slate-700">
           Temporary Chat
         </label>
-        <div className="mt-2 flex items-center gap-2">
-          <input id="temporaryChat" type="radio" />
-          <label htmlFor="temporaryChat" className="text-sm text-slate-600">
-            Enabled
-          </label>
+        <div className="mt-2 flex items-center gap-2 flex justify-center" 
+        onClick= {() => setSwitchDefault(!switchDefault)}
+        >
+          {switchDefault ? (
+            (
+            <ToggleOnIcon fontSize="large" className="text-primary" />
+          )
+          ): (
+            <ToggleOffIcon fontSize="large" className="text-slate-400" />
+          )}
         </div>
       </div>
 
