@@ -1,3 +1,5 @@
+import SideBar from "./components/SideBar";
+
 export default function Home() {
   return (
     <div className="flex min-h-[calc(100vh-88px)] flex-col border-t border-slate-200 bg-white">
@@ -5,7 +7,7 @@ export default function Home() {
         <aside className="w-72 shrink-0 border-r border-slate-200 bg-slate-50 p-4">
           <div className="space-y-3">
             <div className="rounded border border-slate-300 p-2 text-sm text-slate-600">
-              Sidebar goes here
+              <SideBar />
             </div>
             <div className="rounded border border-slate-300 p-2 text-sm text-slate-600">
               Chat history goes here
