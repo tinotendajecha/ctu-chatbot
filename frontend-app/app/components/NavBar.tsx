@@ -4,12 +4,12 @@ export default function NavBar(){
     return(
         <div className="flex gap-5 justify-between items-center p-5">
            <div className="flex gap-3">
-            <div className="md:hidden">
-                <MenuIcon />
+            <div className="md:hidden flex justify-center items-center">
+                <MenuIcon fontSize="large" />
             </div>
             <div className="flex gap-3 flex justify-center items-center">
                 <h1 className="text-3xl font-extrabold  text-primary">CTU</h1>
-                <span className="text-2xl text-gray-500">|</span>
+                <span className="text-2xl text-gray-500 hidden md:block">|</span>
                 <div className="flex flex-col text-sm font-bold text-gray-500">
                      <p className="hidden md:block"> Campus</p>
                     <p className="hidden md:block"> Assistant</p>
