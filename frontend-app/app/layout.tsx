@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Libre_Franklin, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/layout/NavBar";
+import { AuthProvider } from "./lib/auth/AuthContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const libreFranklin = Libre_Franklin({
+  variable: "--font-libre-franklin",
   subsets: ["latin"],
+  weight: ["500", "700", "800"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const sourceSans3 = Source_Sans_3({
+  variable: "--font-source-sans-3",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -26,11 +29,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${libreFranklin.variable} ${sourceSans3.variable} h-full antialiased`}
     >
-      <body className="min-h-screen text-slate-900">
-        <NavBar />
-        {children}
+      <body className="flex h-screen flex-col overflow-hidden bg-bg text-text">
+        <AuthProvider>
+          <NavBar />
+          <main className="min-h-0 flex-1">{children}</main>
+        </AuthProvider>
       </body>
     </html>
   );

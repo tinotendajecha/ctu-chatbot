@@ -1,0 +1,9 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+
+# Source documents dropped in for ingest.py -- keep the folder, not its contents
+data/*
+!data/.gitkeep
