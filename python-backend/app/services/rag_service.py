@@ -37,6 +37,20 @@ GUARDRAIL_TEXT = (
     "resource or explain a brief if you'd like."
 )
 
+# Phrases the model uses (per the "say so explicitly" instruction in PROMPT below) when the
+# retrieved chunks don't actually answer the question. When it declines like this, the
+# retrieved chunks weren't really "sources" for the answer -- just the closest vector matches
+# -- so we don't attach them, rather than showing e.g. 5 unrelated PDF chips next to "I don't
+# have that information."
+NO_ANSWER_MARKERS = (
+    "does not contain",
+    "doesn't contain",
+    "cannot answer",
+    "can't answer",
+    "no information about",
+    "not enough information",
+)
+
 PROMPT = ChatPromptTemplate.from_template(
     """You are the CTU Campus Assistant, answering questions about CTU Training Solutions
 using ONLY the context below. Every claim in your answer must be traceable to the context.
@@ -90,6 +104,11 @@ class RagService:
         return any(keyword in lower for keyword in GUARDRAIL_KEYWORDS)
 
     @staticmethod
+    def _has_no_answer(text: str) -> bool:
+        lower = text.lower()
+        return any(marker in lower for marker in NO_ANSWER_MARKERS)
+
+    @staticmethod
     def _format_context(docs) -> str:
         return "\n\n".join(
             f"[Source: {doc.metadata.get('source', 'unknown')} | "
@@ -122,7 +141,8 @@ class RagService:
         docs = self._retriever.invoke(question)
         context = self._format_context(docs)
         text = self._chain.invoke({"context": context, "question": question})
-        sources = [self._to_source(doc) for doc in docs]
+
+        sources = [] if self._has_no_answer(text) else [self._to_source(doc) for doc in docs]
 
         return ChatReply(role=ROLE_ASSISTANT, text=text, sources=sources)
 

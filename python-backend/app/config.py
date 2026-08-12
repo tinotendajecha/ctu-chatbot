@@ -14,7 +14,7 @@ class Config:
 
     EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "text-embedding-3-small")
     CHAT_MODEL = os.environ.get("CHAT_MODEL", "gpt-4o-mini")
-    RETRIEVER_TOP_K = int(os.environ.get("RETRIEVER_TOP_K", "5"))
+    RETRIEVER_TOP_K = int(os.environ.get("RETRIEVER_TOP_K", "3"))
 
     PORT = int(os.environ.get("PORT", "5000"))
     CORS_ORIGINS = [origin.strip() for origin in os.environ.get(
